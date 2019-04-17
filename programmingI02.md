@@ -6,7 +6,7 @@
 
 [https://paiza.io/ja](https://paiza.io/ja)
 
-＃＃＃ Ruby言語を選択して、paiza.io をブラウザにブックマークする
+Ruby言語を選択して、paiza.io をブラウザにブックマークする
 
 
 ### プログラムを書いて実行してみる
