@@ -166,28 +166,23 @@ then 	# 距離が10cm未満
 
 ```
 kyori=15			# 変数 kyori を１５として初期化
-while kyori >= 10	#距離が10cm 以上の間継続
+while kyori >= 10 do #距離が10cm 以上の間継続
 	puts "前進"
 	kyori=kyori-1	# 変数 kyori の内容を１減算して修正
 end					# while の繰り返し制御の終了
 puts "停止"
-
 ```
 
 ### 変数 kyori の内容も出力する
 
 ```
 kyori=15			# 変数 kyori を１５として初期化
-while kyori >= 10	#距離が10cm 以上の間継続
-	puts "前進"
-	puts kyori		# 繰り返しごとに kyoriの内容
+while kyori >= 10 do	#距離が10cm 以上の間継続
+	puts "前進 #{kyori}"
 	kyori=kyori-1	# 変数 kyori の内容を１減算して修正
 end					# while の繰り返し制御の終了
-puts kyori			# 繰り返し終了後の kyoriの内容
-puts "停止"
-
+puts "停止 #{kyori}"
 ```
-
 
 ## until文の例
 
@@ -201,18 +196,14 @@ puts "停止"
 
 ```
 
-
 ## 小テスト
 
 [https://forms.gle/aeE31iSFZv3j6abs7
 ](https://forms.gle/aeE31iSFZv3j6abs7
 )
 
-
 ## 課題
 
 nの階乗を計算するメソッドを作成してください
 
 実際に100の階乗を実行し、その結果を書いてください
-
-
