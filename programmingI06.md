@@ -1,7 +1,5 @@
-■■　　授業資料URL
-https://drive.google.com/drive/folders/0Bwts5UTHjM9EUS14V0w0OEMyUzQ?hl=ja
-
-第6回：文字列の処理と正規表現
+# プログラミングI 第6回
+## 文字列の処理と正規表現
 
 
 
