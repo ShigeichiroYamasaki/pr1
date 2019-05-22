@@ -27,7 +27,7 @@ def average(a)
   for x in a do
 ##################
   end
-  s/a.size.to_f
+  return s/a.size.to_f
 end
 ```
 
@@ -38,7 +38,7 @@ end
 def average(a)
   s=0
   a.each################
-  s/a.size.to_f
+  return s/a.size.to_f
 end
 ```
 
@@ -48,7 +48,7 @@ end
 # 平均
 def average(a)
   s=a.reduce################
-  s/a.size.to_f
+  return s/a.size.to_f
 end
 ```
 
@@ -185,13 +185,17 @@ puts sum(m01)  # 共通集合の１の個数
 ## tanimoto係数を求める
 
 ```ruby
+def sum(a)         # 配列内の１の個数
+    return a.reduce(0){|s,x| s+x}
+end
+
 def tanimoto(a,b)
-	na=a[(1..-1)].reduce(0){|s,x|s+x}  	# aの１の数
-	nb=b[(1..-1)].reduce(0){|s,x|s+x}		# bの１の数
-	azb=a.zip(b) 								# aとbをzipした配列
+	na=sum(a[(1..-1)])				# aの１の数
+	nb=sum(b[(1..-1)])				# bの１の数
+	azb=a.zip(b) 						# aとbをzipした配列
 	ab=azb[(1..-1)].map{|x|if x==[1,1] then 1 else 0 end}
-	nab=ab.reduce(0){|s,x|s+x}				# aとbの共通集合の数
-	return nab.to_f/(na+nb-nab)			# tanimoto係数
+	nab=sum(ab)						# aとbの共通集合の数
+	return nab.to_f/(na+nb-nab)	# tanimoto係数
 end
 ```
 
@@ -200,13 +204,17 @@ m0=["ジョーズ", 0, 0, 0, 0, 0, 1, 1, 0, 1, 0, 0, 0, 1, 0, 0, 1, 0, 0, 0, 0, 
 m1=["紅の豚", 0, 0, 0, 1, 1, 0, 1, 0, 1, 0, 1, 1, 1, 0, 1, 1, 0, 1, 0, 1, 1, 1, 1, 1, 1, 1, 1, 0, 1, 0, 0, 1, 1, 1, 1, 0, 1, 1, 0, 0, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 1, 0, 0, 1, 1, 1, 0, 0, 1, 0, 1, 1, 1, 1, 0]
 m2=["サマーウォーズ", 1, 1, 0, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 1, 1, 1, 1, 1, 0, 0, 1, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 1, 1, 1, 1, 0, 0, 1, 1, 1, 1, 1, 1, 1, 0, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 0, 1, 0]
 
+def sum(a)         # 配列内の１の個数
+    return a.reduce(0){|s,x| s+x}
+end
+
 def tanimoto(a,b)
-	na=a[(1..-1)].reduce(0){|s,x|s+x}  	# aの１の数
-	nb=b[(1..-1)].reduce(0){|s,x|s+x}		# bの１の数
-	azb=a.zip(b) 								# aとbをzipした配列
+	na=sum(a[(1..-1)])				# aの１の数
+	nb=sum(b[(1..-1)])				# bの１の数
+	azb=a.zip(b) 						# aとbをzipした配列
 	ab=azb[(1..-1)].map{|x|if x==[1,1] then 1 else 0 end}
-	nab=ab.reduce(0){|s,x|s+x}				# aとbの共通集合の数
-	return nab.to_f/(na+nb-nab)			# tanimoto係数
+	nab=sum(ab)						# aとbの共通集合の数
+	return nab.to_f/(na+nb-nab)	# tanimoto係数
 end
 
 puts "#{m0[0]}と#{m1[0]}の類似度：#{tanimoto(m0,m1)}"
