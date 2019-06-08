@@ -388,6 +388,17 @@ p h1.merge(h2)
 ### eachメソッドのブロックの中でeachメソッドを実行する
 
 ```ruby
+a=[1,2,3]
+b=["a","b"]
+
+a.each do|x| 
+    b.each do |y|
+		p [x,y]
+    end 
+end
+```
+
+```ruby
 key=["ジョーズ","紅の豚","サマーウォーズ"]
 value=[1.0, 0.2666, 0.3125]
 ```
