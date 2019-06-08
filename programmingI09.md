@@ -19,12 +19,62 @@
 * シェイプオブウォーター
 * アオハライド
 
-## メッセージのデータ
+###  前回への基本的アプローチ
 
-松岡修造のつぶやき
+* ２段ハッシュによる表を作成する
+* ２段ハッシュを作成するために２段階のイテレータを利用する
+* eachメソッドを使う場合は、行を作成するeachメソッドの中に列を作成するeachメソッドを埋め込む
+* for文を使う場合は、行を作成するfor文の中に列を作成するfor文を埋め込む
+* 作成したハッシュの表から指定した映画の行を取り出し、ソート処理を
 
-[]()
+```ruby
+# tanimoto係数
+def tanimoto(a,b)
+    na=a.sum                        # aの１の数
+    nb=b.sum                        # bの１の数
+    azb=a.zip(b)                    # aとbをzipした配列
+    ab=azb.map{|x|if x==[1,1] then 1 else 0 end}
+    nab=ab.sum                      # aとbの共通集合の数
+    return nab/(na+nb-nab).to_f     # tanimoto係数
+end
+```
 
+```ruby
+# eachメソッドを使う場合
+table={}
+movies.each do |x|		  # 行のキー
+	table[x[0]]={}			  # 映画名をキーとし値を{}にする
+   movies.each do |y| 	  # 列のキー
+		 table[x[0]][y[0]]=tanimoto(x[1..-1],y[1..-1])
+   end
+end
+p table
+```
+
+```ruby
+# for文を使う場合
+table={}
+for x in movies do		# 行のキー
+    table[x[0]]={}		# 映画名をキーとし値を{}にする
+    for y in movies do	# 列のキー
+        table[x[0]][y[0]]=tanimoto(x[1..-1],y[1..-1])
+    end
+end
+p table
+```
+
+```ruby
+ [["言の葉の庭", 0.4117647058823529]]
+ [["きっと、うまくいく", 0.6666666666666666], ["セブン", 0.6666666666666666], ["英国王のスピーチ", 0.5]]
+ [["舟を編む", 0.5555555555555556], ["ピンポン", 0.45454545454545453], ["シェイプオブウォーター", 0.42857142857142855]]
+ [["セブン", 0.6666666666666666], ["きっと、うまくいく", 0.6666666666666666], ["シンドラーのリスト", 0.5]]
+ [["はじまりのうた", 0.6666666666666666], ["舟を編む", 0.42857142857142855], ["グレイテストショーマン", 0.42857142857142855]]
+[]
+```
+
+## サンプルデータ（松岡修造のメッセージ）
+
+[https://github.com/ShigeichiroYamasaki/programming-I/blob/master/shuzo.rb](https://github.com/ShigeichiroYamasaki/programming-I/blob/master/shuzo.rb)
 
 ```ruby
 message=[
@@ -165,6 +215,79 @@ message=[
 "
 ]
 ```
+
+## サンプルデータの確認
+
+```ruby
+puts message[0]
+```
+
+結果
+
+```ruby
+自分らしく生きられていないのか？
+自分を出し切れていないのか？
+噴水を見てみよ。
+噴水は、喜びも悲しみも、
+楽しさも悔しさも、
+すべてを一生懸命に出し切っている。
+だから、あれほど
+キラキラと輝いているんでよ。
+君も噴水になってみろよ。
+一つの所に命を懸けて、
+すべてを出し切ってみろ！
+きっとキラッキラに輝けるぞ！
+```
+
+```ruby
+puts message[1]
+puts message[2]
+puts message[3]
+```
+
+### randomメソッド
+
+0から n-1 までの範囲の乱数を出力する
+
+```ruby
+puts rand(6)
+puts rand(6)
+puts rand(6)
+puts rand(6)
+puts rand(6)
+```
+
+## ランダムにメッセージをつぶやく松岡修造bot
+
+```ruby
+# 松岡修造ボット
+def shuzo(m)    # メッセージのデータを入力mとする
+    return m[rand(m.size)]
+end
+
+puts shuzo(message)
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 ■文字列
