@@ -25,7 +25,8 @@
 * ２段ハッシュを作成するために２段階のイテレータを利用する
 * eachメソッドを使う場合は、行を作成するeachメソッドの中に列を作成するeachメソッドを埋め込む
 * for文を使う場合は、行を作成するfor文の中に列を作成するfor文を埋め込む
-* 作成したハッシュの表から指定した映画の行を取り出し、ソート処理を
+* 作成したハッシュの表から指定した映画の行を取り出し、tanimoto係数に関してソート処理を行う
+* ソートした結果のtanimoto係数が 0.4 に満たないものを除く
 
 ```ruby
 # tanimoto係数
@@ -254,11 +255,9 @@ puts message[3]
 puts rand(6)
 puts rand(6)
 puts rand(6)
-puts rand(6)
-puts rand(6)
 ```
 
-## ランダムにメッセージをつぶやく松岡修造bot
+## ランダムにメッセージをつぶやくメソッド
 
 ```ruby
 # 松岡修造ボット
@@ -318,12 +317,7 @@ m=["東京", "特許", "許可局"].join('、')
 puts m
 ```
 
-### 松岡修造のメッセージを連結して一つの文字列にする
-
-```ruby
-# 配列の要素数
-p message.size
-```
+### サンプルメッセージを一つの文字列に連結
 
 ```ruby
 all_sentences=message.join
@@ -333,7 +327,7 @@ p all_sentences
 ### 文字列を特定文字で分割：splitメソッド
 
 ```ruby
-p "九州、四国、中国、近畿、中部、関東、東北、北海道".split("、")
+p "九州、四国、中国、近畿、中部、関東".split("、")
 ```
 
 ### 松岡修造の全メッセージを "。" で分割する
@@ -344,8 +338,6 @@ sentences=all_sentences.split("。")
 puts sentences[0]
 puts sentences[1]
 puts sentences[2]
-
-puts sentences.size
 ```
 
 ### 松岡修造の全メッセージを "\n" （改行記号）で分割する
@@ -377,7 +369,7 @@ p ["a", "b", "c", "d"].shuffle
 puts sentences.shuffle[0..2].join
 ```
 
-さらに細かい文の断片を撹拌して改行をつけて5つつなげる
+文の断片を撹拌して改行をつけて5つつなげる
 
 ```ruby
 puts sentences2.shuffle[0..4].join("\n")
@@ -389,14 +381,6 @@ puts sentences2.shuffle[0..4].join("\n")
 p "abc" == "abc"
 p "abc" == "acb"
 ```
-
-### 空文字列か？：empty?
-
-```ruby
-p "abc".empty?
-p "".empty?
-```
-
 ### 文字列のインデックス
 
 文字列は、配列のように扱うことができる
@@ -465,10 +449,10 @@ nil
 
 ### nil とは？
 
-nilは存在しないという意味
+nilは対象が存在しないという意味
 
-真偽値の false と同じ作用を持つ
-
+条件文では、真偽値の false と同じ意味を持つ
+条件文で、nil以外の値は true と同じ意味を持つ
 
 ```ruby
 if nil then
@@ -490,11 +474,9 @@ else
 end
 ```
 
-### 真偽値としての nil 以外の値
+### 条件文の真偽値としての nil 以外の値
 
-nil以外の値（数値など）は
-
-真偽値の true と同じ作用を持つ
+nil以外の値（数値など）は真偽値の true と同じ意味を持つ
 
 ```ruby
 if /しか/ =~ "しかもかもしかもしかである" then
@@ -521,9 +503,7 @@ def miroyokaranai(m)
     		puts 'フォールス'
 	end
 end
-```
 
-```ruby
 miroyokaranai("マツタケを見てみろよ。")
 ```
 
@@ -573,7 +553,7 @@ puts "かもしか".gsub(/しか/,"鹿")
 puts "かもしか".gsub(/しか/,"鹿").gsub(/かも/,"鴨")
 ```
 
-### selectメソッドやrejectメソッドを使った文字列の選択
+### selectメソッドを使った文字列の選択
 
 松岡修造のメッセージの細かい文字列の断片の配列 sentence2 から一定のパターンの文字列を選択する
 
@@ -590,8 +570,12 @@ saba=sentences2.select{|x|x=~/サバ/}
 p saba
 ```
 
+### rejectメソッドを使った文字列の選択
+
 ```ruby
-msg=ss.reject{|x|x=~/のか？|るんだ。|みろよ。/}.shuffle[0..3].join("\n")
+msg=sentences2.reject do |x|
+		x=~/のか？|るんだ。|みろよ。/
+         end.shuffle[0..3].join("\n")
 ```
 
 ### より松岡修造らしいメッセージの構成
@@ -604,12 +588,14 @@ msg=ss.reject{|x|x=~/のか？|るんだ。|みろよ。/}.shuffle[0..3].join("\
 
 ```ruby
 def shuzo(ss)
-	noka=ss.select{|x|x=~/のか？/}.shuffle
-	miroyo=ss.select{|x|x=~/みろよ。/}.shuffle
-	dayo=ss.select{|x|x=~/だよ。/}.shuffle
-	msg=ss.reject{|x|x=~/のか？|るんだ。|みろよ。|だよ。/}.shuffle[0..3].join("\n")
-	runda=ss.select{|x|x=~/るんだ。/}.shuffle
-	return [noka[0], miroyo[0], dayo[0], msg, runda[0]].join("\n")
+	noka=ss.select{|x|x=~/のか？/}.shuffle[0]
+	miroyo=ss.select{|x|x=~/みろよ。/}.shuffle[0]
+	dayo=ss.select{|x|x=~/だよ。/}.shuffle[0]
+	msg=ss.reject do |x|
+		x=~/のか？|るんだ。|みろよ。/
+      end.shuffle[0..3].join("\n")
+	runda=ss.select{|x|x=~/るんだ。/}.shuffle[0]
+	return [noka, miroyo, dayo, msg, runda].join("\n")
 end
 
 puts shuzo(sentences2)
