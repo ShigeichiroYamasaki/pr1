@@ -276,8 +276,8 @@ puts shuzo(message)
 ```ruby
 puts "わたし"+"まけましたわ"
 
-name="松岡修造"
-puts "ぼくは"+name+"だよ"
+name="松岡修"
+puts "ぼくも"+name+"ゾウになる！"
 ```
 
 ### 文字列を繰り返す：*
