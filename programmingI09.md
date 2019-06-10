@@ -558,16 +558,25 @@ puts "かもしか".gsub(/しか/,"鹿").gsub(/かも/,"鴨")
 松岡修造のメッセージの細かい文字列の断片の配列 sentence2 から一定のパターンの文字列を選択する
 
 ```ruby
-miroyo=sentences2.select{|x|x=~/みろよ。/}
+p sentences2.select{|x|x=~/みろよ。/}
+p sentences2.select{|x|x=~/だよ。/}
+p sentences2.select{|x|x=~/のか？/}
+p sentences2.select{|x|x=~/るんだ。/}
+p sentences2.select{|x|x=~/サバ/}
+```
+
+```ruby
+miroyo=sentences2.select{|x|x=~/みろよ。/}.shuffle[0]
 p miroyo
-dayo=sentences2.select{|x|x=~/だよ。/}
+dayo=sentences2.select{|x|x=~/だよ。/} .shuffle[0]
 p dayo
-noka=sentences2.select{|x|x=~/のか？/}
+noka=sentences2.select{|x|x=~/のか？/} .shuffle[0]
 p noka
-runda=sentences2.select{|x|x=~/るんだ。/}
+runda=sentences2.select{|x|x=~/るんだ。/} .shuffle[0]
 p runda
-saba=sentences2.select{|x|x=~/サバ/}
+saba=sentences2.select{|x|x=~/サバ/} .shuffle[0]
 p saba
+
 ```
 
 ### rejectメソッドを使った文字列の選択
