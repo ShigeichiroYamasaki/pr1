@@ -557,6 +557,15 @@ puts "かもしか".gsub(/しか/,"鹿").gsub(/かも/,"鴨")
 
 松岡修造のメッセージの細かい文字列の断片の配列 sentence2 から一定のパターンの文字列を選択する
 
+
+```ruby
+# 松岡修造の全メッセージの配列を一つの文字列に結合
+all_sentences=message.join
+# 改行記号(\n)で文字列を１行ごとの配列に分解する
+sentences2=all_sentences.split("\n")
+```
+
+
 ```ruby
 p sentences2.select{|x|x=~/みろよ。/}
 p sentences2.select{|x|x=~/だよ。/}
@@ -595,7 +604,13 @@ msg=sentences2.reject do |x|
 3. 〜だよ
 3. 〜るんだ
 
+
 ```ruby
+# 松岡修造の全メッセージの配列を一つの文字列に結合
+all_sentences=message.join
+# 改行記号(\n)で文字列を１行ごとの配列に分解する
+sentences2=all_sentences.split("\n")
+
 def shuzo(ss)
 	noka=ss.select{|x|x=~/のか？/}.shuffle[0]
 	miroyo=ss.select{|x|x=~/みろよ。/}.shuffle[0]
