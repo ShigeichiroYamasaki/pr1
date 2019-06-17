@@ -14,14 +14,16 @@
 * 松岡修造のメッセージからパターンを見つける
 * 松岡修造のメッセージの断片をパターンごとに集める
 * 例
-	2. 〜よね|のか？
-	3. 見てみろよ。
-	2. でも〜
-	3. 噴水｜サバ｜太陽｜脳｜松茸|雪だるま|紅葉|温泉|ゾウ|キホン
-	4. みろ！／だよ。
-	4. 大丈夫、|大切なんだ思うんだ。|応援する！|信じているんだ。
+	* 〜よね|のか？
+	* 見てみろよ。
+	* でも〜
+	* 噴水｜サバ｜太陽｜脳｜松茸|雪だるま|紅葉|温泉|ゾウ|キホン
+	* みろ！／だよ。
+	* 大丈夫、|大切なんだ思うんだ。|応援する！|信じているんだ。
 	
 * パターンの要素をランダムに選んで、メッセージを構成する
+
+#### プログラム例
 
 ```ruby
 # 松岡修造の全メッセージの配列を一つの文字列に結合
@@ -37,7 +39,9 @@ def shuzo(ss)
 		x=~/噴水｜サバ｜太陽｜脳｜松茸|雪だるま|紅葉|温泉|ゾウ|キホン/
 	end.shuffle[0..2]
 	mirodayo=ss.select{|x|x=~/みろ！|だよ。/}.shuffle[0]
-	nanda=ss.select{|x|x=~/大丈夫、|大切なんだ思うんだ。|応援する！|信じているんだ。/}.shuffle[0]
+	nanda=ss.select do |x|
+		x=~/大丈夫、|大切なんだ思うんだ。|応援する！|信じているんだ。/
+	end.shuffle[0]
 	return [yonenoka, miroyo ,demo,tatoe, mirodayo, nanda].join("\n")
 end
 puts shuzo( sentences2)
@@ -60,8 +64,8 @@ puts shuzo( sentences2)
 
 典型的には、変数名のタイプミスや全角文字の空白を入れた場合に発生します
 
+### 未定義の変数を評価してみる
 ```ruby
-# 未定義の変数を評価してみる
 namae
 ```
 
@@ -70,9 +74,9 @@ namae
 ```
 Main.rb:1:in `<main>': undefined local variable or method `namae' for main:Object (NameError)
 ```
-`namae'  という変数が未定義ですという意味
+`namae'  という変数が未定義という意味
 
-変数名を間違えた場合
+#### 変数名を間違えた場合
 
 ```ruby
 x=100
@@ -106,11 +110,6 @@ Did you mean?  sss
 
 sakasa の中に ss という未定義の変数（またはメソッド）があります。(NameError)
 これは sss じゃ無いですか？
-
-```ruby
-　x=100
-puts x
-```
 
 #### 全角の空白文字によるエラーの例
 
@@ -148,11 +147,11 @@ puts 　x
 
 #### エラーが発生している場所を見つける
 
-* エディターの行を表示させる
+* エディターの行番号を表示させる
 * エラーメッセージが示している行を確認する
 * １行ずつコメントしてエラーメッセージの変化を確認する
 
- エディターの行を表示させる
+ エディターの行番号を表示させる
 	Show gutter: On
 
 * エラーメッセージが示している行を確認する
@@ -168,140 +167,17 @@ Did you mean?  sss
 	from Main.rb:5:in `<main>'
 ```
 
-* １行ずつコメントしてエラーメッセージの変化を確認する
+#### 見えない文字（全角空白）を見えるようにする
 
-このプログラムの２行目をコメントにするとエラーが消える
-２行目にエラーの原因があることがわかる
-
-```ruby
-def sakasa(sss)
-#   return ss.reverrse
-end
-
-puts sakasa("abc")
-```
-
-* エラーが発生するメソッドの内容を一旦すべてコメントにしておき
-* コメントを外すとエラーが発生する場所を見つける
-
-テストデータを作成する
-
-```ruby
-sentences2=[]
-```
-
-メソッドの処理内容をすべてコメントにする
-
-```ruby
-# テスト用データ
-sentences2=[]
-def shuzo(ss)
-#	yone=ss.select{|x|x=~/よね。/}.shuffle[0]
-#	demo=ss.select{|x|x=~/でも/}.shuffle[0]
-#	msg=ss.select do |x|
-#		x=~/噴水|サバ|太陽|脳|マツタケ|キホン/
-#	end.shuffle[0..2]
-#	dakarakoso=sss.select{|x|x=~/だからこそ/}.shuffle[0]
-#	nanda=ss.select{|x|x=~/なんだ。/}.shuffle[0]
-#	return [yone,demo,msg,dakarakoso,nanda].join("\n")
-end
-puts shuzo( sentences2)
-```
-
-エラーが出ないことを確認
-
-コメントを一つはずず（一つの文単位）
-
-```ruby
-# テスト用データ
-sentences2=[]
-def shuzo(ss)
-	yone=ss.select{|x|x=~/よね。/}.shuffle[0]
-#	demo=ss.select{|x|x=~/でも/}.shuffle[0]
-#	msg=ss.select do |x|
-#		x=~/噴水|サバ|太陽|脳|マツタケ|キホン/
-#	end.shuffle[0..2]
-#	dakarakoso=sss.select{|x|x=~/だからこそ/}.shuffle[0]
-#	nanda=ss.select{|x|x=~/なんだ。/}.shuffle[0]
-#	return [yone,demo,msg,dakarakoso,nanda].join("\n")
-end
-puts shuzo( sentences2)
-```
-
-```ruby
-# テスト用データ
-sentences2=[]
-def shuzo(ss)
-	yone=ss.select{|x|x=~/よね。/}.shuffle[0]
-	demo=ss.select{|x|x=~/でも/}.shuffle[0]
-#	msg=ss.select do |x|
-#		x=~/噴水|サバ|太陽|脳|マツタケ|キホン/
-#	end.shuffle[0..2]
-#	dakarakoso=sss.select{|x|x=~/だからこそ/}.shuffle[0]
-#	nanda=ss.select{|x|x=~/なんだ。/}.shuffle[0]
-#	return [yone,demo,msg,dakarakoso,nanda].join("\n")
-end
-puts shuzo( sentences2)
-```
-
-一つのブロックのコメントを外す
-
-```ruby
-# テスト用データ
-sentences2=[]
-def shuzo(ss)
-	yone=ss.select{|x|x=~/よね。/}.shuffle[0]
-	demo=ss.select{|x|x=~/でも/}.shuffle[0]
-	msg=ss.select do |x|
-		x=~/噴水|サバ|太陽|脳|マツタケ|キホン/
-	end.shuffle[0..2]
-#	dakarakoso=sss.select{|x|x=~/だからこそ/}.shuffle[0]
-#	nanda=ss.select{|x|x=~/なんだ。/}.shuffle[0]
-#	return [yone,demo,msg,dakarakoso,nanda].join("\n")
-end
-puts shuzo( sentences2)
-```
-
-
-```ruby
-# テスト用データ
-sentences2=[]
-def shuzo(ss)
-	yone=ss.select{|x|x=~/よね。/}.shuffle[0]
-	demo=ss.select{|x|x=~/でも/}.shuffle[0]
-	msg=ss.select do |x|
-		x=~/噴水|サバ|太陽|脳|マツタケ|キホン/
-	end.shuffle[0..2]
-	dakarakoso=sss.select{|x|x=~/だからこそ/}.shuffle[0]
-#	nanda=ss.select{|x|x=~/なんだ。/}.shuffle[0]
-#	return [yone,demo,msg,dakarakoso,nanda].join("\n")
-end
-puts shuzo( sentences2)
-```
-
-エラーが出現する
-
-```
-Main.rb:9:in `shuzo': undefined local variable or method `sss' for main:Object (NameError)
-Did you mean?  ss
-	from Main.rb:13:in `<main>'
-```
-
-
-#### 未定義の変数を使っていないかチェックする
-
-* 変数名のタイプミスをチェックする
-* メソッドの引数名と変数名の一致をチェックする
-* 全角の空白が入っていないかチェックする
-
-#### エディタで見えない文字（全角空白）を見えるようにする
-
-未定義変数が見つからない場合、空白文字が関係している可能性が高くなります
+未定義変数が見つからない場合、全角空白文字の可能性が高い
 
 Paiza.io の設定例
 	Theme : GitHub
 	Show invisible: On
 	
+	
+空白文字が・などで表示される
+
 ```ruby
 # 全角の空白文字を英語の小文字として認識された場合
 　x=100		# '全角空白x'
@@ -317,7 +193,152 @@ puts x
 200
 ```
 
-しかし、全角空白を見やすくする方法は無いので、全角モードにして文字を入力するときには、空白文字を入れないように注意しましょう
+しかし、半角空白と全角空白を見やすくする区別する方法は無いので、全角モードにして文字を入力するときには、空白文字を入れないように注意しましょう
+
+
+#### １行ずつコメントしてエラーメッセージの変化を確認する
+
+このプログラムの２行目をコメントにするとエラーが消える
+２行目にエラーの原因があることがわかる
+
+```ruby
+def sakasa(sss)
+#   return ss.reverrse
+end
+
+puts sakasa("abc")
+```
+
+* エラーが発生するメソッドの内容を一旦すべてコメントにしておき
+* コメントを外すとエラーが発生する場所を見つける
+* テストデータを使ってエラーの箇所を発見する
+
+#### このプログラムのエラー箇所を見つける
+
+```ruby
+def shuzo(ss)
+	yone=ss.select{|x|x=~/よね。/}.shuffle[0]
+	demo=ss.select{|x|x=~/でも/}.shuffle[0]
+	msg=ss.select do |x|
+		x=~/噴水|サバ|太陽|脳|マツタケ|キホン/
+	end.shuffle[0..2]
+	dakarakoso=sss.select{|x|x=~/だからこそ/}.shuffle[0]
+	nanda=ss.select{|x|x=~/なんだ。/}.shuffle[0]
+	return [yone,demo,msg,dakarakoso,nanda].join("\n")
+end
+puts shuzo( sentences2)
+```
+#### テストデータを作成する
+
+```ruby
+testdata=[]
+```
+
+#### メソッドの処理内容をすべてコメントにする
+
+```ruby
+# テスト用データ
+testdata =[]
+def shuzo(ss)
+#	yone=ss.select{|x|x=~/よね。/}.shuffle[0]
+#	demo=ss.select{|x|x=~/でも/}.shuffle[0]
+#	msg=ss.select do |x|
+#		x=~/噴水|サバ|太陽|脳|マツタケ|キホン/
+#	end.shuffle[0..2]
+#	dakarakoso=sss.select{|x|x=~/だからこそ/}.shuffle[0]
+#	nanda=ss.select{|x|x=~/なんだ。/}.shuffle[0]
+#	return [yone,demo,msg,dakarakoso,nanda].join("\n")
+end
+puts shuzo( testdata)
+```
+
+エラーが出ないことを確認
+
+コメントを一つはずず（一つの文単位）
+
+```ruby
+# テスト用データ
+testdata =[]
+def shuzo(ss)
+	yone=ss.select{|x|x=~/よね。/}.shuffle[0]
+#	demo=ss.select{|x|x=~/でも/}.shuffle[0]
+#	msg=ss.select do |x|
+#		x=~/噴水|サバ|太陽|脳|マツタケ|キホン/
+#	end.shuffle[0..2]
+#	dakarakoso=sss.select{|x|x=~/だからこそ/}.shuffle[0]
+#	nanda=ss.select{|x|x=~/なんだ。/}.shuffle[0]
+#	return [yone,demo,msg,dakarakoso,nanda].join("\n")
+end
+puts shuzo( testdata)
+```
+
+```ruby
+# テスト用データ
+testdata =[]
+def shuzo(ss)
+	yone=ss.select{|x|x=~/よね。/}.shuffle[0]
+	demo=ss.select{|x|x=~/でも/}.shuffle[0]
+#	msg=ss.select do |x|
+#		x=~/噴水|サバ|太陽|脳|マツタケ|キホン/
+#	end.shuffle[0..2]
+#	dakarakoso=sss.select{|x|x=~/だからこそ/}.shuffle[0]
+#	nanda=ss.select{|x|x=~/なんだ。/}.shuffle[0]
+#	return [yone,demo,msg,dakarakoso,nanda].join("\n")
+end
+puts shuzo( testdata)
+```
+
+一つのブロックのコメントを外す
+
+```ruby
+# テスト用データ
+testdata =[]
+def shuzo(ss)
+	yone=ss.select{|x|x=~/よね。/}.shuffle[0]
+	demo=ss.select{|x|x=~/でも/}.shuffle[0]
+	msg=ss.select do |x|
+		x=~/噴水|サバ|太陽|脳|マツタケ|キホン/
+	end.shuffle[0..2]
+#	dakarakoso=sss.select{|x|x=~/だからこそ/}.shuffle[0]
+#	nanda=ss.select{|x|x=~/なんだ。/}.shuffle[0]
+#	return [yone,demo,msg,dakarakoso,nanda].join("\n")
+end
+puts shuzo( testdata)
+```
+
+コメントを一つはずず（一つの文単位）
+
+```ruby
+# テスト用データ
+testdata =[]
+def shuzo(ss)
+	yone=ss.select{|x|x=~/よね。/}.shuffle[0]
+	demo=ss.select{|x|x=~/でも/}.shuffle[0]
+	msg=ss.select do |x|
+		x=~/噴水|サバ|太陽|脳|マツタケ|キホン/
+	end.shuffle[0..2]
+	dakarakoso=sss.select{|x|x=~/だからこそ/}.shuffle[0]
+#	nanda=ss.select{|x|x=~/なんだ。/}.shuffle[0]
+#	return [yone,demo,msg,dakarakoso,nanda].join("\n")
+end
+puts shuzo( testdata)
+```
+
+エラーが出現する
+
+```
+Main.rb:9:in `shuzo': undefined local variable or method `sss' for main:Object (NameError)
+Did you mean?  ss
+	from Main.rb:13:in `<main>'
+```
+
+
+#### NameError の原因の未定義の変数を探す
+
+* 変数名のタイプミスをチェックする
+* メソッドの引数名と変数名の一致をチェックする
+* 全角の空白が入っていないかチェックする
+
 
 ## NoMethodError
 
@@ -361,12 +382,12 @@ n.sort
 Main.rb:2:in `<main>': undefined method `sort' for 123:Integer (NoMethodError)
 ```
 
+文字列に対して数値のメソッド max  を適用した場合
+
 ```ruby
 s="abc"
 s.max
 ```
-
-文字列に対して数値のメソッド max  を適用した場合
 
 ```
 Main.rb:2:in `<main>': undefined method `max' for "abc":String (NoMethodError)
@@ -376,7 +397,7 @@ Main.rb:2:in `<main>': undefined method `max' for "abc":String (NoMethodError)
 
 * エラーが発生している場所を見つける
 * オブジェクトのクラスを確認する
-* オブジェクトの
+* 利用可能なメソッドの一覧を確認する
 
 
 #### エラーが発生している場所を見つける
@@ -399,7 +420,7 @@ puts x.class
 NilClass
 ```
 
-* 利用可能なメソッドの一覧を確認する
+#### 利用可能なメソッドの一覧を確認する
 
 methods メソッドで、そのオブジェクトに対して利用可能なメソッドの一覧を確認する
 
@@ -447,7 +468,9 @@ hello("やまさき")
                      ^
 ```               
 
-if then else end の構文をミスして　iff と書いた場合
+####  予約語のタイプミス
+
+if 文をミスして　iff と書いてしまった場合
 
 ```ruby
 iff true then 1 else 2 end
@@ -462,20 +485,20 @@ iff true then 1 else 2 end
 ### SyntaxErrorへの対処方法
 
 * エラーが発生している場所を見つける
-* " " (ダブルクォーテーション）や ' ' （シングルクォーテーション）のマッチをチェックする
-* def ~ end のマッチを確認する（インデントを利用する）
-* ( ) 括弧のマッチを確認する
-* {} 中括弧のマッチを確認する（インデントを利用する）
-* do  ~ end のマッチを確認する（インデントを利用する）
-* if ~ end のマッチを確認する（インデントを利用する）
-* // のマッチを確認する
+* 構文のマッチングを確認する
+	* " " (ダブルクォーテーション）や ' ' （シングルクォーテーション）// のマッチをチェックする
+	* def ~ end のマッチを確認する
+	* do  ~ end のマッチを確認する
+	* ( ) や{}のマッチを確認する
+ 	* if ~ end のマッチを確認する
+ 	
 
 #### エラーが発生している場所を見つける
 
 基本です！
 エラーの発生場所を見つける方法は、基本的にNoNameErrorと同じ
 
-#### " " (ダブルクォーテーション）や ' ' （シングルクォーテーション）のマッチをチェックする
+#### 構文のマッチングを確認する
 
 ```ruby
 def hello(name)
@@ -486,46 +509,48 @@ hello("やまさき")
 
 ## プログラム開発とデバッグの基本
 
-プログラム開発のほとんどは仕様の作成とテストの実行とデバッグです。
+プログラム開発の工程
+	* 仕様の作成
+	* テストデータの作成
+	* テストの実行
+	* デバッグ
+	* 完成
 
 ### バグフィクス
 
 エラーが発生したときにエラーを無くすことをバグフィックスといいます。
 仕様どおりでない動きをしたときにそれを修正して正常な動きにすることもバグフィクスといいます。
 
+仕様修正
+	仕様そのものが原因で要件定義が実現できない場合
+	仕様そのものを適切なものに修正し
+	テストデータの作成からやり直す
+
+
 ### プログラムは小さく小さく分割して開発する
 
-一度に全体を開発しようとしてはいけません
+* 一度に全体を開発しようとすると
+	* バグの場所を特定できなくなる
+	* どの部品に問題があるのかわからなくなる
 
 ★授業資料をコピー／ペーストをして動作確認する場合も同じ！
 
 ### プログラム開発のステップ
 
-1. 大まかな仕様を決める
-	2. プログラムの機能と目的を決める
-	3. 機能を分割して部品化する
-	4. 部品ごとの仕様を決めていく
-2. テストデータをつくる
-	3. 部品ごと（単体といいます）のテストデータを作成
-		4. 部品が１行の実行形式の場合
-			5. メソッドチェーンがある場合は、さらにチェーンの段階ごとに分割します
-		5. 部品がブロックの場合
-		6. 部品がメソッドの場合
-	4. 部品を全部まとめた結果、目的とするテストデータを作成します
-3. 部品（単体）ごとのテストデータを実行した結果がどうなるかを定義します
-5. 部品を全部まとめた結果の目的とするプログラムのテスト結果を定義します
-4. これらの準備を行ったうえで、実際にプログラムをコーディングします
-	5. コーディンして完成した部品ごとにテストを実施し
-	6. テストデータを実行した結果が仕様どおりなら、部品の完成とします
-	7. 部品を完成させていき、全部の機能をまとめたプログラムを作成します
-	8. 部品を全部まとめた結果の目的とするプログラムのテスト結果が仕様どおちなら完成です
+要件定義
+	課題の文書など
 	
-
+* 要件定義から全体としての仕様を決める
+* 部品ごとの仕様を定義する
+* 部品ごとのテストデータをつくる
+* 部品プログラムをコーディングしてテストする
+* 部品をまとめた全体プログラムを作成しテストする
+	
 ## プログラム開発とデバッグの実際
 
 前回の課題をテストしながら開発してみる
 
-### 開発するプログラムの目標
+### 要件定義
 
 #### 入力
 
@@ -534,7 +559,7 @@ hello("やまさき")
 #### 出力
 	松岡修造らしいメッセージをランダムに構成した文
 	
-#### 仕様を実現するための部品の機能
+#### 要件定義を実現するために必要な部品の機能
 
 	* 入力メッセージの配列要素をパターンごとに分類する機能
 		* 「よね。」（悩みなどへの共感）
@@ -549,14 +574,13 @@ hello("やまさき")
 
 #### 入力メッセージをパターンごとに分類
 
-
 		* 「よね。」（悩みなどへの共感）
 		* 「でも、」　（自分の意見への話題の転換）
 		* 例えるもの（噴水／サバ／太陽／脳／マツタケ／キホン／雪だるま／紅葉／温泉）
 		* 「みろ！／だよ。」
 		* （結論）(大丈夫、／大切なんだ。／思うんだ。／応援する！／信じているんだ。|るぞ！)
 
-##### テストデータ
+##### テストデータの作成
 
 入力パターンを含む文字列の配列を人為的に作成する
 テストデータの作成は、手間はかかりますが重要な作業です。
@@ -605,7 +629,7 @@ n=testdata.size		# テストデータの配列の個数
 時には「休む勇気」を持つことも大切なんだ。
 ```
 
-#### 入力メッセージの配列要素をパターンごとに分類する機能
+#### 入力メッセージをパターンごとに分類する機能
 
 * 「よね。」（悩みなどへの共感）
 
@@ -617,7 +641,7 @@ yone=testdata.select{|x|x=~/よね。/}
 p yone
 ```
 
-望ましい計算結果
+* 望ましい計算結果
 
 ```
  ["君はいつも、本当に頑張っているよね。"]
@@ -632,7 +656,7 @@ p yone
 demo=testdata.select{|x|x=~/でも、/}
 p demo
 ```
-望ましい計算結果
+* 望ましい計算結果
 
 ```
  ["でも、君の脳は「ＮＯ！」なんて言ってないはず。"]
@@ -649,7 +673,7 @@ tatoe=testdata.select{|x|x=~/噴水|サバ|太陽|脳|マツタケ|キホン|紅
 p tatoe
 ```
 
-望ましい計算結果
+* 望ましい計算結果
 
 ```
 ["でも、君の脳は「ＮＯ！」なんて言ってないはず。", "噴水を見てみろよ。", "サバを見てみろよ、", "君を照らしてくれる太陽だって、", "だったら、マツタケを見てみろよ。", "自然の紅葉は一年に一度しか輝かない、", "温泉のようなものじゃないかな。"]
@@ -665,7 +689,7 @@ mirorunda=testdata.select{|x|x=~/みろ！|るんだ。/}
 p mirorunda
 ```
 
-望ましい計算結果
+* 望ましい計算結果
 
 ```
 ["すべてを出し切ってみろ！", "君の脳も、僕も、そう信じているんだ。"]
@@ -681,7 +705,7 @@ nanda=testdata.select{|x|x=~/なんだ。/}
 p nanda
 ```
 
-望ましい計算結果
+* 望ましい計算結果
 
 ```
  ["時には「休む勇気」を持つことも大切なんだ。"]
@@ -693,30 +717,30 @@ p nanda
 
 ```ruby
 puts yone.shuffle[0]
-puts demo.shuffle[0]
+puts mirorunda.shuffle[0]
 puts tatoe.shuffle[0]
 puts nanda.shuffle[0]
 ```
 
-望ましい計算結果
+* 望ましい計算結果
 
 ```
 君はいつも、本当に頑張っているよね。
-でも、君の脳は「ＮＯ！」なんて言ってないはず。
+君の脳も、僕も、そう信じているんだ。
 君を照らしてくれる太陽だって、
 時には「休む勇気」を持つことも大切なんだ。
 ```
 
-#### 選んだメッセージを結合して一つの文字列にする機能
+#### 選んだメッセージを一つの文字列にする機能
 
 構成する順序で文字列の配列を作成する
 配列要素を join メソッドで連接して一つの文字列にする
 join メソッドで連接するときに、改行記号(\n)を埋め込む
 
 ```ruby
-puts [yone.shuffle[0], demo.shuffle[0], tatoe.shuffle[0], nanda.shuffle[0]].join("\n")
+puts [yone.shuffle[0], mirorunda.shuffle[0], tatoe.shuffle[0], nanda.shuffle[0]].join("\n")
 ```
-望ましい計算結果
+* 望ましい計算結果の例
 
 ```
 君はいつも、本当に頑張っているよね。
@@ -730,7 +754,6 @@ puts [yone.shuffle[0], demo.shuffle[0], tatoe.shuffle[0], nanda.shuffle[0]].join
 
 1. このプログラムの全体の仕様である２段階ハッシュを作成する機能のテストデータとその望ましい計算結果を作成してください
 2. このプログラムの部品機能であるtanimoto係数を計算するメソッドのテストデータとその望ましい計算結果を作成してください
-
 
 
 また、その仕様に基づく機能を確認するために必要なテストデータとの結果を作成してください。
