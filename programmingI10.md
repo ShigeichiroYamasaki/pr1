@@ -94,7 +94,7 @@ Did you mean?  x
 ```ruby
 # メソッドの引数が sss なのに、間違って　ss という変数を使ってしまった
 def sakasa(sss)
-   return ss.reverrse
+   return ss.reverse
 end
 
 puts sakasa("abc")
@@ -203,7 +203,7 @@ puts x
 
 ```ruby
 def sakasa(sss)
-#   return ss.reverrse
+#   return ss.reverse
 end
 
 puts sakasa("abc")
