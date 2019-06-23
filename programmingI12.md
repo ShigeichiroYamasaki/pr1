@@ -1,9 +1,71 @@
-■■　　授業資料URL
-https://drive.google.com/drive/folders/0Bwts5UTHjM9EUS14V0w0OEMyUzQ?hl=ja
+# プログラミングI 第12回
 
-第12回：変数と定数
+分岐制御、入力と出力、ライブラリの利用
 
-■課題の回答案
+
+
+
+## 前回の課題
+
+
+## 分岐制御
+
+* 複数の条件による分岐制御
+
+### if then elsif ... end
+
+* 条件文を繰り返す
+* 2分木：条件文のtrue/false で２つに分かれる木
+
+
+### case when
+
+* 複数の条件で分岐する
+
+## 標準入力と標準出力
+
+OSの機能とプログラムの接点
+
+### 標準出力
+
+OSがプログラムの出力をコンピュータの装置に出すインターフェースのこと
+
+
+* 画面出力
+* ネットへの出力
+
+```ruby
+puts "せかいさんこんにちは"
+```
+
+### 標準入力
+
+OSが外部からのデータをプログラムに渡すインターフェスのこと
+
+* キーボード入力
+* ネットからの入力
+
+```ruby
+name=gets
+puts name+"さんこんにちは"
+```
+
+余計な改行が入る
+
+### chomp メソッド
+
+行末の改行を削除するメソッド
+
+```ruby
+name=gets.chomp
+puts name+"さんこんにちは"
+```
+
+### Paiza.io の標準入力と標準出力
+
+
+
+
 
 def osusume(movies,eiga_v,index)
   e0=eiga_v[index]
