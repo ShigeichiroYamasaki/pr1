@@ -1,7 +1,24 @@
 ■■　　授業資料URL
 https://drive.google.com/drive/folders/0Bwts5UTHjM9EUS14V0w0OEMyUzQ?hl=ja
 
-第12回：変数と定数
+第12回：　分岐制御　変数と定数
+
+
+## 分岐制御
+
+* 複数の条件による分岐制御
+
+### if then elsif ... end
+
+* 条件文を繰り返す
+* 2分木：条件文のtrue/false で２つに分かれる木
+
+
+### case when
+
+* 複数の条件で分岐する
+
+
 
 ■課題の回答案
 
