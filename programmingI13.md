@@ -1,6 +1,6 @@
 # プログラミングI 第13回
 
-入力と出力、ライブラリの利用、ネットワークの利用
+クラスとインスタンス
 
 ## 前回の課題
 
@@ -241,9 +241,8 @@ end
 tama = Cat.new("オス")
 mike = Cat.new("メス")
 
-tama.naderu
-mike.naderu
-
+p tama.naderu
+p mike.naderu
 ```
 
 ## ユーザのクラスとインスタンスの例
